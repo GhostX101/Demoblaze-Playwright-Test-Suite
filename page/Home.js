@@ -1,22 +1,24 @@
-import{test, expect} from '@playwright/test'
-export class HomePage{
-    constructor(page){
-        this.page = page
+import { test, expect } from '@playwright/test';
+
+export class HomePage {
+    constructor(page) {
+        this.page = page;
     }
-       async navigate() {
-        await this.page.goto('https://www.demoblaze.com/index.html');
-       }
 
-       NavDisplay(){
-        return this.page.getByRole('img', { name: 'First slide' })
-       }
+    async navigate() {
+        await this.page.goto('https://www.demoblaze.com/index.html', { waitUntil: 'domcontentloaded', timeout: 60000 });
+    }
 
-       leftNav(){
-        return this.page.locator('#carouselExampleIndicators').getByRole('button', { name: 'Previous' })
-       }
+    NavDisplay() {
+        return this.page.getByRole('img', { name: 'First slide' });
+    }
 
-    Right(){
-        return this.pagelocator('#carouselExampleIndicators').getByRole('button', { name: 'Next' })
+    leftNav() {
+        return this.page.locator('#carouselExampleIndicators').getByRole('button', { name: 'Previous' });
+    }
+
+    Right() {
+        return this.page.locator('#carouselExampleIndicators').getByRole('button', { name: 'Next' });
     }
 
     Categories(){
@@ -50,10 +52,12 @@ export class HomePage{
         return this.page.getByRole('link', { name: 'Cart' })
         }
     
-    // about(){
-    //     return this.page.locator('div').filter({ hasText: 'About Us We believe' }).nth(3)
+     contact(){
+        return this.page.getByRole('link', { name: 'Contact' })
+    }    
+
     getintouch(){
-        return this.page.getByText('Get in Touch Address: 2390 El')
+        return this.page.locator('.caption').filter({ hasText: 'Get in Touch' })
     }
 
     footer(){
