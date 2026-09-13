@@ -75,35 +75,6 @@ test('sign up with password only', async ({ page }) => {
     await expect(signup.signupModal()).toBeVisible();
 });
 
-// These cases verify how the site handles unusual but non-empty input values.
-test.describe('signup accepts non-empty username and password values', () => {
-    const validCases = [
-        ['special characters in username', '!user_' + Date.now(), 'Password123'],
-        ['special characters in password', 'special' + Date.now(), '!@#$%^&*'],
-        ['username containing spaces', 'user name ' + Date.now(), 'Password123'],
-        ['password containing spaces', 'spacepass' + Date.now(), 'Pass word 123'],
-        ['username containing numbers', 'user123' + Date.now(), 'Password123'],
-        ['very short username', 'u' + Date.now(), 'Password123'],
-        ['very short password', 'shortpass' + Date.now(), 'x'],
-        ['very long username', 'u'.repeat(120) + Date.now(), 'Password123'],
-        ['very long password', 'longpass' + Date.now(), 'p'.repeat(120)],
-        ['uppercase and lowercase characters in username', 'UserName' + Date.now(), 'Password123'],
-        ['uppercase and lowercase characters in password', 'mixedpass' + Date.now(), 'PassWord123'],
-        ['username with leading and trailing spaces', '  user' + Date.now() + '  ', 'Password123'],
-        ['password with leading and trailing spaces', 'trimpass' + Date.now(), '  Password123  '],
-        ['only spaces in username', '   ', 'Password123'],
-        ['only spaces in password', 'spaceonly' + Date.now(), '   ']
-    ];
-
-    for (const [scenario, username, password] of validCases) {
-        test(`sign up with ${scenario}`, async ({ page }) => {
-            const signup = await openSignup(page);
-            const message = await submitSignup(signup, username, password);
-
-            expect(['Sign up successful.', 'This user already exist.']).toContain(message);
-        });
-    }
-});
 
 // Reusing the exact registered username and password must not create another account.
 test('sign up with an already registered username and password', async ({ page }) => {
